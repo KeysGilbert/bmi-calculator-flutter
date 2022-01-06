@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'icon_content.dart';
+import 'reusable_card.dart';
 
-const defaultCardColor = Color(0xFF1d1e33);
+const Color tappedCardColor = Color(0xFF1d1e33);
+const double bottomHeight = 80.0;
+const Color inactiveCardColor = Color(0xFF111328);
+
+enum Gender { MALE, FEMALE }
 
 class InputPage extends StatefulWidget {
   @override
@@ -9,6 +15,25 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleColor = inactiveCardColor;
+  Color femaleColor = inactiveCardColor;
+
+  void updateColor(Gender selectedGender) {
+    if (selectedGender == Gender.MALE && maleColor == inactiveCardColor) {
+      maleColor = tappedCardColor;
+      femaleColor = inactiveCardColor;
+    } else {
+      maleColor = inactiveCardColor;
+    }
+
+    if (selectedGender == Gender.FEMALE && femaleColor == inactiveCardColor) {
+      femaleColor = tappedCardColor;
+      maleColor = inactiveCardColor;
+    } else {
+      femaleColor = inactiveCardColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,20 +47,34 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(
-                    colour: defaultCardColor,
-                    cardChild: IconContent(
-                      icon: FontAwesomeIcons.mars,
-                      label: "MALE",
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(Gender.MALE);
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: maleColor,
+                      cardChild: IconContent(
+                        icon: FontAwesomeIcons.mars,
+                        label: "MALE",
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
-                    colour: defaultCardColor,
-                    cardChild: IconContent(
-                      icon: FontAwesomeIcons.venus,
-                      label: "FEMALE",
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(Gender.FEMALE);
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: femaleColor,
+                      cardChild: IconContent(
+                        icon: FontAwesomeIcons.venus,
+                        label: "FEMALE",
+                      ),
                     ),
                   ),
                 ),
@@ -46,7 +85,7 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(colour: defaultCardColor),
+                  child: ReusableCard(colour: tappedCardColor),
                 ),
               ],
             ),
@@ -55,64 +94,22 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(colour: defaultCardColor),
+                  child: ReusableCard(colour: tappedCardColor),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: defaultCardColor),
+                  child: ReusableCard(colour: tappedCardColor),
                 ),
               ],
             ),
-          )
+          ),
+          Container(
+            color: Color(0xFFEB1555),
+            width: double.infinity,
+            height: bottomHeight,
+            margin: EdgeInsets.only(top: 10),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class IconContent extends StatelessWidget {
-  //widget properties
-  final IconData icon;
-  final String label;
-
-  IconContent({@required this.icon, this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(
-          icon,
-          size: 80,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          label,
-          style: TextStyle(color: Color(0xFF8D8E98), fontSize: 18),
-        ),
-      ],
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  //properties of this widget
-  final Color colour;
-  final Widget cardChild;
-
-  ReusableCard({@required this.colour, this.cardChild});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10), //for rounded edges
-        color: colour,
-      ),
-      child: cardChild,
     );
   }
 }
