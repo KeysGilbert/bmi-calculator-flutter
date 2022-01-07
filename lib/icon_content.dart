@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
 class IconContent extends StatelessWidget {
   //widget properties
@@ -21,7 +22,7 @@ class IconContent extends StatelessWidget {
         ),
         Text(
           label,
-          style: TextStyle(color: Color(0xFF8D8E98), fontSize: 18),
+          style: labelTextStyle,
         ),
       ],
     );
