@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
-
-const Color tappedCardColor = Color(0xFF1d1e33);
-const double bottomHeight = 80.0;
-const Color inactiveCardColor = Color(0xFF111328);
+import 'constants.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -17,6 +14,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleColor = inactiveCardColor;
   Color femaleColor = inactiveCardColor;
+  int userHeight = 180;
 
   void updateColor(Gender selectedGender) {
     if (selectedGender == Gender.MALE && maleColor == inactiveCardColor) {
@@ -42,6 +40,7 @@ class _InputPageState extends State<InputPage> {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -85,7 +84,41 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(colour: tappedCardColor),
+                  child: ReusableCard(
+                    colour: tappedCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "HEIGHT",
+                          style: labelTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: <Widget>[
+                            Text(
+                              userHeight.toString(),
+                              style: numberStyle,
+                            ),
+                            Text("cm", style: labelTextStyle),
+                          ],
+                        ),
+                        Slider(
+                            value: userHeight.toDouble(),
+                            min: 120,
+                            max: 220,
+                            activeColor: Colors.pink,
+                            inactiveColor: Colors.grey[200],
+                            onChanged: (double newValue) {
+                              setState(() {
+                                userHeight = newValue.round();
+                              });
+                            }),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
