@@ -1,8 +1,10 @@
+import 'package:bmi_calculator/round_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
+import 'round_icon_button.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -14,7 +16,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleColor = inactiveCardColor;
   Color femaleColor = inactiveCardColor;
-  int userHeight = 180;
+  int userHeight = 180; //centimeters
+  int userWeight = 60; //kilograms
 
   void updateColor(Gender selectedGender) {
     if (selectedGender == Gender.MALE && maleColor == inactiveCardColor) {
@@ -105,17 +108,27 @@ class _InputPageState extends State<InputPage> {
                             Text("cm", style: labelTextStyle),
                           ],
                         ),
-                        Slider(
-                            value: userHeight.toDouble(),
-                            min: 120,
-                            max: 220,
-                            activeColor: Colors.pink,
-                            inactiveColor: Colors.grey[200],
-                            onChanged: (double newValue) {
-                              setState(() {
-                                userHeight = newValue.round();
-                              });
-                            }),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            thumbColor: Colors.pink,
+                            thumbShape:
+                                RoundSliderThumbShape(enabledThumbRadius: 15),
+                            overlayShape:
+                                RoundSliderOverlayShape(overlayRadius: 5),
+                            overlayColor: Colors.pink,
+                          ),
+                          child: Slider(
+                              value: userHeight.toDouble(),
+                              min: 120,
+                              max: 220,
+                              activeColor: Colors.pink,
+                              inactiveColor: Colors.grey[200],
+                              onChanged: (double newValue) {
+                                setState(() {
+                                  userHeight = newValue.round();
+                                });
+                              }),
+                        ),
                       ],
                     ),
                   ),
@@ -127,7 +140,41 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(colour: tappedCardColor),
+                  child: ReusableCard(
+                    colour: tappedCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Weight", style: labelTextStyle),
+                        Text(
+                          userWeight.toString(),
+                          style: numberStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  userWeight--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 10),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  userWeight++;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: ReusableCard(colour: tappedCardColor),
