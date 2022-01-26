@@ -18,6 +18,7 @@ class _InputPageState extends State<InputPage> {
   Color femaleColor = inactiveCardColor;
   int userHeight = 180; //centimeters
   int userWeight = 60; //kilograms
+  int userAge = 0;
 
   void updateColor(Gender selectedGender) {
     if (selectedGender == Gender.MALE && maleColor == inactiveCardColor) {
@@ -114,7 +115,7 @@ class _InputPageState extends State<InputPage> {
                             thumbShape:
                                 RoundSliderThumbShape(enabledThumbRadius: 15),
                             overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 5),
+                                RoundSliderOverlayShape(overlayRadius: 15),
                             overlayColor: Colors.pink,
                           ),
                           child: Slider(
@@ -157,7 +158,11 @@ class _InputPageState extends State<InputPage> {
                               icon: FontAwesomeIcons.minus,
                               onPressed: () {
                                 setState(() {
-                                  userWeight--;
+                                  if (userWeight > 0) {
+                                    userWeight--;
+                                  } else {
+                                    null;
+                                  }
                                 });
                               },
                             ),
@@ -177,7 +182,46 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: tappedCardColor),
+                  child: ReusableCard(
+                    colour: tappedCardColor,
+                    cardChild: Column(children: <Widget>[
+                      Text(
+                        "Age",
+                        style: labelTextStyle,
+                      ),
+                      Text(
+                        userAge.toString(),
+                        style: numberStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  if (userAge > 0) {
+                                    userAge--;
+                                  } else {
+                                    null;
+                                  }
+                                });
+                              }),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundIconButton(
+                            icon: FontAwesomeIcons.plus,
+                            onPressed: () {
+                              setState(() {
+                                userAge++;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
                 ),
               ],
             ),
