@@ -8,9 +8,13 @@ import 'constants.dart';
 import 'round_icon_button.dart';
 import 'results_page.dart';
 import 'bottom_button.dart';
+import 'calculator.dart';
 
 enum Gender { MALE, FEMALE }
 
+  int userHeight = 180; //centimeters
+  int userWeight = 60; //kilograms
+  int userAge = 0;
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
@@ -19,9 +23,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleColor = inactiveCardColor;
   Color femaleColor = inactiveCardColor;
-  int userHeight = 180; //centimeters
-  int userWeight = 60; //kilograms
-  int userAge = 0;
+
 
   void updateColor(Gender selectedGender) {
     if (selectedGender == Gender.MALE && maleColor == inactiveCardColor) {
@@ -232,6 +234,7 @@ class _InputPageState extends State<InputPage> {
           BottomButton(
             buttonTitle: "CALCULATE",
             onTap: () {
+              Calculator().calculateBMI(userWeight, userHeight);
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ResultsPage();
               }));
