@@ -33,7 +33,7 @@ class ResultsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    "Normal",
+                    Calculator().bmiRange(),
                     style: TextStyle(
                       color: Color(0xFF24D876),
                       fontSize: 22,
@@ -42,13 +42,15 @@ class ResultsPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                   Calculator().calculateBMI(userWeight, userHeight).toString(),
+                    Calculator()
+                        .calculateBMI(userWeight, userHeight)
+                        .toString(),
                     style:
                         TextStyle(fontSize: 100, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Your bmi is in the normal range",
+                    Calculator().bmiMessage(),
                     style: TextStyle(
                       fontSize: 22,
                     ),
