@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'reusable_card.dart';
 import 'round_icon_button.dart';
 import 'bottom_button.dart';
+import 'calculator.dart';
 
 class ResultsPage extends StatelessWidget {
   @override
@@ -41,7 +42,7 @@ class ResultsPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "20",
+                   Calculator().calculateBMI(userWeight, userHeight).toString(),
                     style:
                         TextStyle(fontSize: 100, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
