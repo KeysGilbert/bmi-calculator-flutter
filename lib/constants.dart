@@ -8,3 +8,5 @@ const Color inactiveCardColor = Color(0xFF111328);
 const Color tappedCardColor = Color(0xFF1d1e33);
 const TextStyle numberStyle =
     TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
+const TextStyle largeButtonText =
+    TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
